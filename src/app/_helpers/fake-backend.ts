@@ -28,10 +28,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUsers();
                 case url.match(/\/users\/\d+$/) && method === 'GET':
                     return getUserById();
-                case url.match(/\/users\/\d+$/) && method === 'PUT':
-                    return updateUser();
-                case url.match(/\/users\/\d+$/) && method === 'DELETE':
-                    return deleteUser();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -46,9 +42,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!user) return error('Username or password is incorrect');
             return ok({
                 id: user.id,
+                name: user.name,
+                email: user.email,
                 username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
                 token: 'fake-jwt-token'
             })
         }
@@ -76,32 +72,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             const user = users.find(x => x.id === idFromUrl());
             return ok(user);
-        }
-
-        function updateUser() {
-            if (!isLoggedIn()) return unauthorized();
-
-            let params = body;
-            let user = users.find(x => x.id === idFromUrl());
-
-            // only update password if entered
-            if (!params.password) {
-                delete params.password;
-            }
-
-            // update and save user
-            Object.assign(user, params);
-            localStorage.setItem('users', JSON.stringify(users));
-
-            return ok();
-        }
-
-        function deleteUser() {
-            if (!isLoggedIn()) return unauthorized();
-
-            users = users.filter(x => x.id !== idFromUrl());
-            localStorage.setItem('users', JSON.stringify(users));
-            return ok();
         }
 
         // helper functions

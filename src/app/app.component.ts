@@ -11,7 +11,5 @@ export class AppComponent {
         this.accountService.user.subscribe(x => this.user = x);
     }
 
-    logout() {
-        this.accountService.logout();
-    }
+   
 }

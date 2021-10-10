@@ -12,7 +12,7 @@ const routes: Routes = [
     { path: 'users', loadChildren: usersModule, canActivate: [AuthGuard] },
     { path: 'account', loadChildren: accountModule },
 
-    // otherwise redirect to home
+    // wildcard - redirect to home
     { path: '**', redirectTo: '' }
 ];
 

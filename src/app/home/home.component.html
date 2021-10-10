@@ -1,7 +1,33 @@
-﻿<div class="p-4">
-    <div class="container">
-        <h1>Hi {{user.firstName}}!</h1>
-        <p>You're logged in with Angular 9!!</p>
-        <p><a routerLink="/users">Manage Users</a></p>
+﻿<h5 class="mx-5 my-3">Username : {{user.username}}</h5>
+<div class="logout text-center">
+    <div class="my-3">
+        <a routerLink="/" (click)="logout()" class="btn btn-primary">
+            &nbsp;&nbsp; &nbsp;&nbsp; Logout  &nbsp;&nbsp; &nbsp;&nbsp;
+        </a>
     </div>
+</div>
+<div class="user-list mx-5">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 30%">Name</th>
+                <th style="width: 30%">Email</th>
+                <th style="width: 30%">Username</th>
+                <th style="width: 30%">Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.password}}</td>
+            </tr>
+            <tr *ngIf="!users">
+                <td colspan="4" class="text-center">
+                    <span class="spinner-border spinner-border-lg align-center"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
